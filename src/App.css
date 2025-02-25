@@ -24,19 +24,20 @@
   --n-colorful-extra: 170 37% 39%;
 }
 
-.keyTips {
-  transition: 0.125s;
-  margin-bottom: 2em;
-  line-height: 2;
+.retryContainer {
+  transition: 0.5s;
 }
 
-.key {
-  margin: 0 0.25em;
-  color: hsl(var(--n-bg));
-  background-color: hsl(var(--n-sub-color));
-  padding: 0.1rem 0.3rem;
-  border-radius: 0.1rem;
-  display: inline-block;
-  font-size: 0.7rem;
-  line-height: 0.7rem;
+.retryContainer > svg {
+  transition: 0.75s;
+}
+
+.retryContainer:hover {
+  transition: 0.5s;
+  background-color: hsl(var(--n-sub-alt));
+}
+
+.retryContainer:hover > svg {
+  transition: 0.75s;
+  transform: rotate(-360deg);
 }
