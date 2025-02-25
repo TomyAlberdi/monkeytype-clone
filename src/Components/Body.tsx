@@ -19,14 +19,14 @@ export const Body = () => {
   const [isActive, setIsActive] = useState<boolean>(false);
   const [showResults, setShowResults] = useState<boolean>(false);
 
-  const inputRef = useRef<HTMLInputElement>(null); // Reference to input
+  const inputRef = useRef<HTMLInputElement>(null);
 
   async function fetchNewQuote() {
     const randomQuote = await getRandomQuote();
     setQuote(randomQuote);
-    setWords(randomQuote.text.split(" ")); // Split quote into words
-    setTypedWords([]); // Reset typed words
-    setCurrentWordIndex(0); // Reset position
+    setWords(randomQuote.text.split(" "));
+    setTypedWords([]);
+    setCurrentWordIndex(0);
     setInput("");
   }
 
@@ -48,24 +48,24 @@ export const Body = () => {
 
   function handleKeyPress(e: React.KeyboardEvent<HTMLInputElement>) {
     if (e.key === " ") {
-      e.preventDefault(); // Prevent space from affecting the input field
+      e.preventDefault();
 
       if (input.trim() === words[currentWordIndex]) {
-        setTypedWords([...typedWords, input.trim()]); // Save correct word
-        setCurrentWordIndex(currentWordIndex + 1); // Move to next word
-        setInput(""); // Reset input field
+        setTypedWords([...typedWords, input.trim()]);
+        setCurrentWordIndex(currentWordIndex + 1);
+        setInput("");
       }
     } else if (
       e.key === "Backspace" &&
       input.length === 0 &&
       currentWordIndex > 0
     ) {
-      e.preventDefault(); // Prevent backspace from affecting previous words
+      e.preventDefault();
     }
   }
 
   function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
-    if (!isActive) setIsActive(true); // Start timer on first keypress
+    if (!isActive) setIsActive(true);
     setInput(e.target.value);
   }
 
@@ -116,7 +116,7 @@ export const Body = () => {
         <h3 className="text-xl">{Quote.source}</h3>
       </div>
       <input
-        ref={inputRef} // Attach ref to input
+        ref={inputRef}
         type="text"
         value={input}
         onChange={handleInputChange}
