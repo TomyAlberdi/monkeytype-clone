@@ -18,7 +18,7 @@ export const Body = () => {
   const [currentWordIndex, setCurrentWordIndex] = useState<number>(0);
   const [timer, setTimer] = useState<number>(60);
   const [isActive, setIsActive] = useState<boolean>(false);
-  const [showResults, setShowResults] = useState<boolean>(false);
+  //const [showResults, setShowResults] = useState<boolean>(false);
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -44,7 +44,7 @@ export const Body = () => {
       return () => clearInterval(interval);
     } else if (timer === 0) {
       setIsActive(false);
-      setShowResults(true);
+      //setShowResults(true);
     }
   }, [isActive, timer]);
 
@@ -74,7 +74,7 @@ export const Body = () => {
   function handleRetry() {
     setTimer(60);
     setIsActive(false);
-    setShowResults(false);
+    //setShowResults(false);
     fetchNewQuote();
     setTimeout(() => inputRef.current?.focus(), 100);
   }
