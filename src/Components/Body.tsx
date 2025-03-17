@@ -14,6 +14,7 @@ export const Body = () => {
   const [words, setWords] = useState<string[]>([]);
   const [input, setInput] = useState<string>("");
   const [typedWords, setTypedWords] = useState<string[]>([]);
+  const [incorrectWords, setIncorrectWords] = useState<Set<number>>(new Set());
   const [currentWordIndex, setCurrentWordIndex] = useState<number>(0);
   const [timer, setTimer] = useState<number>(60);
   const [isActive, setIsActive] = useState<boolean>(false);
@@ -27,6 +28,7 @@ export const Body = () => {
     setWords(randomQuote.text.split(" "));
     setTypedWords([]);
     setCurrentWordIndex(0);
+    setIncorrectWords(new Set());
     setInput("");
   }
 
@@ -49,17 +51,17 @@ export const Body = () => {
   function handleKeyPress(e: React.KeyboardEvent<HTMLInputElement>) {
     if (e.key === " ") {
       e.preventDefault();
-
-      if (input.trim() === words[currentWordIndex]) {
-        setTypedWords([...typedWords, input.trim()]);
-        setCurrentWordIndex(currentWordIndex + 1);
-        setInput("");
+      setTypedWords([...typedWords, input.trim()]);
+      if (input.trim() !== words[currentWordIndex]) {
+        setIncorrectWords((prev) => new Set(prev).add(currentWordIndex));
       }
-    } else if (
-      e.key === "Backspace" &&
-      input.length === 0 &&
-      currentWordIndex > 0
-    ) {
+      if (currentWordIndex + 1 === words.length) {
+        fetchNewQuote();
+      } else {
+        setCurrentWordIndex(currentWordIndex + 1);
+      }
+      setInput("");
+    } else if (e.key === "Backspace" && input.length === 0 && currentWordIndex > 0) {
       e.preventDefault();
     }
   }
@@ -95,7 +97,7 @@ export const Body = () => {
               {word.split("").map((char, j) => {
                 let className = "text-n-sub-color";
                 if (i < currentWordIndex) {
-                  className = "text-n-error-color";
+                  className = incorrectWords.has(i) ? "text-n-main" : "text-n-error-color";
                 } else if (i === currentWordIndex) {
                   className =
                     j < input.length
