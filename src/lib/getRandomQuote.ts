@@ -2,7 +2,7 @@ import { Quote } from "@/Components/Body";
 
 export async function getRandomQuote(retries: number = 5): Promise<Quote> {
   // Fetch the JSON file
-  const response = await fetch("/english.json");
+  const response = await fetch("/monkeytype-clone/english.json");
   const { quotes, groups } = await response.json();
 
   // Select a random group
